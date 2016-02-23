@@ -1,2 +1,2 @@
 # typhonjs-npm-scripts-test
-Provides ES6+ test scripts using Istanbul &amp; Mocha for all TyphonJS NPM modules.
+Provides NPM scripts for testing ES6+ projects using Istanbul & Mocha for all TyphonJS NPM modules and beyond.
