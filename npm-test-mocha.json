@@ -1,0 +1,16 @@
+/**
+ * You can provide comments in npm-test-mocha.json
+ *
+ * If Babel or `typhonjs-npm-scripts-build-babel` is installed and configured uncomment `--compilers js:babel-register`
+ * in the options below. Also if your test scripts are ES6 then use `babel-node` instead of `node` to launch the testing
+ * NPM scripts.
+ */
+{
+   "source": "./test/src",
+
+   "options":
+   [
+//      "--compilers js:babel-register",
+      "-t 120000 --recursive"
+   ]
+}

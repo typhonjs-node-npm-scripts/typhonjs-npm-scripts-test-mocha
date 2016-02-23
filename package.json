@@ -1,0 +1,50 @@
+{
+  "name": "typhonjs-npm-scripts-test-mocha",
+  "version": "0.0.1",
+  "homepage": "https://github.com/typhonjs-node-npm/typhonjs-npm-scripts-test-mocha",
+  "description": "Provides NPM scripts for testing projects using Istanbul & Mocha for all TyphonJS NPM modules and beyond.",
+  "license": "MPL-2.0",
+  "author": {
+    "name": "Mike Leahy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/typhonjs-node-npm/typhonjs-npm-scripts-test-mocha/typhonjs-npm-scripts-test-mocha.git"
+  },
+  "maintainers": [
+    {
+      "name": "Mike Leahy",
+      "email": "support@js.typhonrt.org"
+    }
+  ],
+  "dependencies": {
+    "chai": "^3.5.0",
+    "codecov.io": "^0.1.6",
+    "fs-extra": "^0.26.5",
+    "istanbul": "^1.0.0-alpha.2",
+    "mocha": "^2.4.5",
+    "strip-json-comments": "^2.0.0"
+  },
+  "devDependencies": {
+  },
+  "keywords": [
+    "typhonjs",
+    "node",
+    "npm",
+    "script",
+    "test",
+    "istanbul",
+    "mocha"
+  ],
+  "scripts": {
+    "test": "node ./scripts/test.js"
+  },
+  "files": [
+    "lib",
+    "scripts"
+  ],
+  "directories": {},
+  "bugs": {
+    "url": "https://github.com/typhonjs-node-npm/typhonjs-npm-scripts-test-mocha/issues"
+  }
+}
