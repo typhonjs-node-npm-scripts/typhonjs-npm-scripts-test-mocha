@@ -50,7 +50,7 @@ console.log('!! TestScriptsRunner - 1 - process.env.TRAVIS: ' + process.env.TRAV
       // Restore Travis environment variable
       if (typeof origTravis !== 'undefined')
       {
-         process.env.TRAVIS = isTravis;
+         process.env.TRAVIS = origTravis;
       }
    });
 });
