@@ -7,13 +7,12 @@
  */
 
 var cp = require('child_process');
-var fs = require('fs-extra');
 
 // Append test source glob
 var mochaOptions = '-t 120000 --recursive ./test-scripts/mocha/TestScriptsRunner.js';
 
 // Includes only the TyphonJS node_modules NPM scripts. Outputs to `coverage-test`.
-var istanbulOptions = "-i '[ **/scripts/test.js **/scripts/test-coverage.js ]' -x '**/test-src/**' --dir coverage-test ";
+var istanbulOptions = "-x '[ **/test-scripts/** **/test-src/** ]' --dir coverage-test ";
 
 var exec;
 
