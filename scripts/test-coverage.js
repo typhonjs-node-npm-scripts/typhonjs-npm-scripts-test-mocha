@@ -69,16 +69,22 @@ mochaOptions += ' ' + configInfo.source;
 
 var exec;
 
+console.log('!! test-coverage - process.env.TRAVIS: ' + process.env.TRAVIS +'; typeof: ' + (typeof process.env.TRAVIS));
+
 /**
  * If running on Travis CI only generate lcov data and pipe to Codecov.
  */
 if (process.env.TRAVIS)
 {
+console.log('!! test-coverage - 0');
+
    exec = './node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- ' + mochaOptions
     + ' && cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js';
 }
 else
 {
+console.log('!! test-coverage - 1');
+
    exec = './node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha -- ' + mochaOptions;
 }
 
