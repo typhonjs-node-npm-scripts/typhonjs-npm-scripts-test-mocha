@@ -27,15 +27,11 @@ describe('Script Test', function()
     */
    it('test-coverage', function()
    {
-console.log('!! TestScriptsRunner - 0 - process.env.TRAVIS: ' + process.env.TRAVIS);
-
       // Store current TRAVIS environment variable.
       var origTravis = process.env.TRAVIS;
       delete process.env.TRAVIS;
 
       fs.emptyDirSync('./coverage');
-
-console.log('!! TestScriptsRunner - 1 - process.env.TRAVIS: ' + process.env.TRAVIS);
 
       // Instruments test-coverage script.
       require('../../scripts/test-coverage.js');
@@ -48,9 +44,6 @@ console.log('!! TestScriptsRunner - 1 - process.env.TRAVIS: ' + process.env.TRAV
       fs.emptyDirSync('./coverage');
 
       // Restore Travis environment variable
-      if (typeof origTravis !== 'undefined')
-      {
-         process.env.TRAVIS = origTravis;
-      }
+      if (typeof origTravis !== 'undefined') { process.env.TRAVIS = origTravis; }
    });
 });
