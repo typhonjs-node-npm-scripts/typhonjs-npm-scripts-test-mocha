@@ -15,14 +15,12 @@
    "istanbul":
    {
       "command": "cover",
-
       "options": ["--report lcovonly"]
    },
 
    "mocha":
    {
       "source": "./test-src/src",
-
       "options":
       [
          // "--compilers js:babel-register",

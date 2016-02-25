@@ -24,7 +24,7 @@ try
 }
 catch(err)
 {
-   throw new Error("TyphonJS NPM script (test) error: " + err);
+   throw new Error("TyphonJS NPM script (test-coverage) error: " + err);
 }
 
 // Verify that `Istanbul` exists.
@@ -37,7 +37,7 @@ try
 }
 catch(err)
 {
-   throw new Error("TyphonJS NPM script (test) error: " + err);
+   throw new Error("TyphonJS NPM script (test-coverage) error: " + err);
 }
 
 // Verify that `Mocha` exists.
@@ -50,7 +50,7 @@ try
 }
 catch(err)
 {
-   throw new Error("TyphonJS NPM script (test) error: " + err);
+   throw new Error("TyphonJS NPM script (test-coverage) error: " + err);
 }
 
 // Load `npm-test.json` and strip comments.
@@ -60,14 +60,15 @@ var configInfo = JSON.parse(stripJsonComments(fs.readFileSync('./npm-test.json',
 if (typeof configInfo.istanbul !== 'object')
 {
    throw new Error(
-    "TyphonJS NPM script (test) error: istanbul entry is not an object or is missing in 'npm-test.json'.");
+    "TyphonJS NPM script (test-coverage) error: istanbul entry is not an object or is missing in 'npm-test.json'.");
 }
 
 // Verify that Istanbul command entry is a string.
 if (typeof configInfo.istanbul.command !== 'string')
 {
    throw new Error(
-    "TyphonJS NPM script (test) error: istanbul command entry is not a string or is missing in 'npm-test.json'.");
+    "TyphonJS NPM script (test-coverage) error: istanbul command entry is not a string or is missing in "
+     + "'npm-test.json'.");
 }
 
 var istanbulOptions = configInfo.istanbul.command;
@@ -78,7 +79,7 @@ if (typeof configInfo.istanbul.options !== 'undefined')
    if (!Array.isArray(configInfo.istanbul.options))
    {
       throw new Error(
-       "TyphonJS NPM script (test) error: istanbul options entry is not an array in 'npm-test.json'.");
+       "TyphonJS NPM script (test-coverage) error: istanbul options entry is not an array in 'npm-test.json'.");
    }
 
    istanbulOptions += ' ' + configInfo.istanbul.options.join(' ');
@@ -88,14 +89,14 @@ if (typeof configInfo.istanbul.options !== 'undefined')
 if (typeof configInfo.mocha !== 'object')
 {
    throw new Error(
-    "TyphonJS NPM script (test) error: mocha entry is not an object or is missing in 'npm-test.json'.");
+    "TyphonJS NPM script (test-coverage) error: mocha entry is not an object or is missing in 'npm-test.json'.");
 }
 
 // Verify that source entry is a string.
 if (typeof configInfo.mocha.source !== 'string')
 {
    throw new Error(
-    "TyphonJS NPM script (test) error: mocha source entry is not a string or is missing in 'npm-test.json'.");
+    "TyphonJS NPM script (test-coverage) error: mocha source entry is not a string or is missing in 'npm-test.json'.");
 }
 
 var mochaOptions = '';
@@ -106,7 +107,7 @@ if (typeof configInfo.mocha.options !== 'undefined')
    if (!Array.isArray(configInfo.mocha.options))
    {
       throw new Error(
-       "TyphonJS NPM script (test) error: mocha options entry is not an array in 'npm-test.json'.");
+       "TyphonJS NPM script (test-coverage) error: mocha options entry is not an array in 'npm-test.json'.");
    }
 
    mochaOptions += ' ' + configInfo.mocha.options.join(' ');
