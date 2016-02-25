@@ -2,7 +2,7 @@
 
 var assert =      require('chai').assert;
 
-var TestClass =   require('../fixture/TestClass');
+var TestDummy =   require('../fixture/TestDummy');
 
 /**
  * Provides a basic test.
@@ -14,7 +14,7 @@ describe('Test Runner', function()
    it('Verify TestClass', function()
    {
       // Attempt to load transpiled test.
-      var test = new TestClass();
+      var test = new TestDummy();
 
       assert('Test Success' === test.test());
    });

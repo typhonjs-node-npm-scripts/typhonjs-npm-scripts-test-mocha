@@ -33,14 +33,18 @@
     "npm",
     "script",
     "test",
+    "chai",
+    "codecov",
     "istanbul",
     "mocha"
   ],
+  "engines" : {
+    "npm" : ">=3.x"
+  },
   "scripts": {
-    "test": "node ./scripts/test.js"
+    "test": "node ./test-scripts/scripts/testAll.js"
   },
   "files": [
-    "lib",
     "scripts"
   ],
   "directories": {},

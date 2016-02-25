@@ -6,7 +6,7 @@
  * NPM scripts.
  */
 {
-   "source": "./test/src",
+   "source": "./test-src/src",
 
    "options":
    [
