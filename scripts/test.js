@@ -4,14 +4,20 @@
  * test -- Initiates the testing process with Mocha. A valid `npm-scripts.json` configuration file must be located
  * in the root path. This configuration file contains the following options:
  * ```
- * (string)          source - The source directory.
- * (Array<string>)   options - An array of optional parameters which are prepended to the invocation of Mocha. Please
- *                             run `./node_modules/.bin/mocha --help` for all available options.
+ * (string)          codecov - An optional string to include uploading for results to Codecov on Travis CI.
+ * (object)          istanbul - An object hash containing Istanbul configuration with the following options:
+ *    (string)          command - The Istanbul command to execute (cover, check-coverage, instrument, report).
+ *    (Array<string>)   options - An array of optional parameters which are appended to the invocation of Istanbul.
+ *                                Please run `./node_modules/.bin/istanbul help` for all available options.
+ * (object)          mocha - An object hash containing Mocha configuration with the following options:
+ *    (string)          source - The test source directory.
+ *    (Array<string>)   options - An array of optional parameters which are prepended to the invocation of Mocha. Please
+ *                                run `./node_modules/.bin/mocha --help` for all available options.
  * ```
  */
 
 var cp =                require('child_process');
-var fs =                require('fs-extra');
+var fs =                require('fs');
 var stripJsonComments = require('strip-json-comments');
 
 // Verify that `npm-scripts.json` exists.
