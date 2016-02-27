@@ -11,7 +11,7 @@ var TestDummy =   require('../fixture/TestDummy');
  */
 describe('Test Runner', function()
 {
-   it('Verify TestClass', function()
+   it('Verify TestDummy', function()
    {
       // Attempt to load transpiled test.
       var test = new TestDummy();
