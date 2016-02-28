@@ -4,7 +4,7 @@
  * test -- Initiates the testing process with Mocha. A valid `npm-scripts.json` configuration file must be located
  * in the root path. This configuration file contains the following options:
  * ```
- * (string)          codecov - An optional string to include uploading for results to Codecov on Travis CI.
+ * (string)          coverage - An optional string to append that may upload results to Codecov on Travis CI.
  * (object)          istanbul - An object hash containing Istanbul configuration with the following options:
  *    (string)          command - The Istanbul command to execute (cover, check-coverage, instrument, report).
  *    (Array<string>)   options - An array of optional parameters which are appended to the invocation of Istanbul.
@@ -138,20 +138,20 @@ mochaOptions += ' ' + testConfig.mocha.source;
 var exec;
 
 /**
- * If running on Travis CI potentially append Codecov command.
+ * If running on Travis CI potentially append coverage command.
  */
 if (process.env.TRAVIS)
 {
-   var codecovCommand;
+   var coverageCommand;
 
    // Load any codecov command
-   if (typeof testConfig.codecov === 'string') { codecovCommand = testConfig.codecov; }
+   if (typeof testConfig.coverage === 'string') { coverageCommand = testConfig.coverage; }
 
    exec = './node_modules/.bin/istanbul ' + istanbulOptions + ' ./node_modules/mocha/bin/_mocha --'
     + mochaOptions;
 
-   // Append codecov command if it exists.
-   if (codecovCommand) { exec += ' ' + codecovCommand; }
+   // Append coverage command if it exists.
+   if (coverageCommand) { exec += ' ' + coverageCommand; }
 }
 else
 {
