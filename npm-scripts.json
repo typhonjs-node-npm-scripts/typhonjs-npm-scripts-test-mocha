@@ -3,33 +3,21 @@
  *
  * All test configuration data must be included in a `test` object hash.
  *
- * When running on Travis CI the `codecov` is appended.
+ * When running on Travis CI the `travis` hash is mixed into the main test config hash.
  *
- * When running `test-coverage` the Istanbul command is necessary; any options defined will be appended.
+ * When running `test-coverage` the Istanbul command is necessary; any options defined will be appended along with a
+ * potential coverage command appended at the end.
  *
- * If Babel or `typhonjs-npm-scripts-build-babel` is installed and configured uncomment `--compilers js:babel-register`
+ * If Babel or `typhonjs-npm-scripts-build-babel` is installed and configured include `--compilers js:babel-register`
  * in the Mocha options below. Also if your test scripts are ES6 then use `babel-node` instead of `node` to launch the
  * testing NPM scripts.
  */
 {
    "test":
    {
-      "coverage": "&& cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js",
+      "travis": { "coverage": "&& cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js" },
 
-      "istanbul":
-      {
-         "command": "cover",
-         "options": ["--report lcovonly"]
-      },
-
-      "mocha":
-      {
-         "source": "./test-src/src",
-         "options":
-         [
-            // "--compilers js:babel-register",
-            "-t 120000 --recursive"
-         ]
-      }
+      "istanbul": { "command": "cover", "options": ["--report lcovonly"] },
+      "mocha": { "source": "./test-src/src", "options": ["-t 120000 --recursive"] }
    }
 }

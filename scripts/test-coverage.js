@@ -14,6 +14,10 @@
  *    (Array<string>)   options - An array of optional parameters which are prepended to the invocation of Mocha. Please
  *                                run `./node_modules/.bin/mocha --help` for all available options.
  * ```
+ *
+ * When running on Travis CI a `test.travis` hash in `npm-scripts.json` may be provided which overrides any
+ * data stored in the `test` hash. This is useful for specifying the `coverage` command when running on Travis CI.
+ *
  */
 
 var cp =                require('child_process');
@@ -71,6 +75,14 @@ if (typeof configInfo.test !== 'object')
 
 var testConfig = configInfo.test;
 
+/**
+ * If running on Travis CI potentially copy any overrides from an internal `travis` key in `test` hash.
+ */
+if (process.env.TRAVIS && typeof testConfig.travis === 'object')
+{
+   for (var key in testConfig.travis) { testConfig[key] = testConfig.travis[key]; }
+}
+
 // Verify that Istanbul entry is an object.
 if (typeof testConfig.istanbul !== 'object')
 {
@@ -118,6 +130,7 @@ if (typeof testConfig.mocha.source !== 'string')
      + "'npm-scripts.json'.");
 }
 
+// Create mocha options.
 var mochaOptions = '';
 
 // Add any optional parameters.
@@ -135,29 +148,14 @@ if (typeof testConfig.mocha.options !== 'undefined')
 // Append test source glob
 mochaOptions += ' ' + testConfig.mocha.source;
 
-var exec;
+// Load any coverage command
+var coverageCommand = '';
 
-/**
- * If running on Travis CI potentially append coverage command.
- */
-if (process.env.TRAVIS)
-{
-   var coverageCommand;
+if (typeof testConfig.coverage === 'string') { coverageCommand = ' ' + testConfig.coverage; }
 
-   // Load any codecov command
-   if (typeof testConfig.coverage === 'string') { coverageCommand = testConfig.coverage; }
-
-   exec = './node_modules/.bin/istanbul ' + istanbulOptions + ' ./node_modules/mocha/bin/_mocha --'
-    + mochaOptions;
-
-   // Append coverage command if it exists.
-   if (coverageCommand) { exec += ' ' + coverageCommand; }
-}
-else
-{
-   exec = './node_modules/.bin/istanbul ' + istanbulOptions + ' ./node_modules/mocha/bin/_mocha --'
-    + mochaOptions;
-}
+// Build executable statement
+var exec = './node_modules/.bin/istanbul ' + istanbulOptions + ' ./node_modules/mocha/bin/_mocha --'
+ + mochaOptions + coverageCommand;
 
 // Empty the standard Istanbul coverage directory.
 fs.emptyDirSync('./coverage');
