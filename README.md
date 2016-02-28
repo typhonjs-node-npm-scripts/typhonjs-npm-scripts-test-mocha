@@ -53,12 +53,17 @@ with the following options:
                                run `./node_modules/.bin/mocha --help` for all available options.
 ```
 
+When running on Travis CI a `test.travis` hash in `npm-scripts.json` may be provided which overrides any
+data stored in the `test` hash. This is useful for specifying the `coverage` command when running on Travis CI.
+
 A basic configuration for testing ES6 NPM modules in `npm-scripts.json` follows:
 ```
 {
    "test":
    {
-      "coverage": "&& cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js",
+      // Provides a `coverage` handling command that is appended when running on Travis CI.
+      "travis": { "coverage": "&& cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js" },
+`
       "istanbul": { "command": "cover", "options": [ "--report lcovonly" ] },
       "mocha": { "source": "./test/src", "options": [ "--compilers js:babel-register", "-t 120000 --recursive" ] }
    }
