@@ -42,7 +42,7 @@ Please note the usage of `babel-node` to invoke the test scripts. If you are usi
 `npm-scripts.json` must be defined in the root path and contain an object hash `test` hash
 with the following options:
 ```
-(string)          codecov - An optional string to include uploading for results to Codecov on Travis CI.
+(string)          coverage - An optional string to append that may upload results to Codecov on Travis CI.
 (object)          istanbul - An object hash containing Istanbul configuration with the following options:
    (string)          command - The Istanbul command to execute (cover, check-coverage, instrument, report).
    (Array<string>)   options - An array of optional parameters which are appended to the invocation of Istanbul.
@@ -58,7 +58,7 @@ A basic configuration for testing ES6 NPM modules in `npm-scripts.json` follows:
 {
    "test":
    {
-      "codecov": "&& cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js",
+      "coverage": "&& cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js",
       "istanbul": { "command": "cover", "options": [ "--report lcovonly" ] },
       "mocha": { "source": "./test/src", "options": [ "--compilers js:babel-register", "-t 120000 --recursive" ] }
    }
