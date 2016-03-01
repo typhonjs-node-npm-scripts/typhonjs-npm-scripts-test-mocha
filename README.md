@@ -61,7 +61,7 @@ A basic configuration for testing ES6 NPM modules in `npm-scripts.json` follows:
 {
    "test":
    {
-      // Provides a `coverage` handling command that is appended when running on Travis CI.
+      /* Provides a `coverage` handling command that is appended when running on Travis CI. */
       "travis": { "coverage": "&& cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js" },
 `
       "istanbul": { "command": "cover", "options": [ "--report lcovonly" ] },
