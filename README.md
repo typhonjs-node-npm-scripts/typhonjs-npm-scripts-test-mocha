@@ -29,7 +29,7 @@ To configure the test scripts provide this entry in `package.json` scripts entry
 
 ```
   "devDependencies": {
-    "typhonjs-npm-scripts-test-mocha": "^0.0.x"
+    "typhonjs-npm-scripts-test-mocha": "^0.0.8"
   },
   "scripts": {
     "test": "babel-node ./node_modules/typhonjs-npm-scripts-test-mocha/scripts/test.js",
