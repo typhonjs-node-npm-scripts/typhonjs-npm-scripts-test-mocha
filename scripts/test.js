@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * test -- Initiates the testing process with Mocha. A valid `npm-scripts.json` configuration file must be located
+ * test -- Initiates the testing process with Mocha. A valid `.npmscriptrc` configuration file must be located
  * in the root path. This configuration file contains the following options:
  * ```
  * (string)          codecov - An optional string to include uploading for results to Codecov on Travis CI.
@@ -20,12 +20,12 @@ var cp =                require('child_process');
 var fs =                require('fs');
 var stripJsonComments = require('strip-json-comments');
 
-// Verify that `npm-scripts.json` exists.
+// Verify that `.npmscriptrc` exists.
 try
 {
-   if (!fs.statSync('./npm-scripts.json').isFile())
+   if (!fs.statSync('./.npmscriptrc').isFile())
    {
-      throw new Error("'npm-scripts.json' not found in root path.");
+      throw new Error("'.npmscriptrc' not found in root path.");
    }
 }
 catch(err)
@@ -46,14 +46,14 @@ catch(err)
    throw new Error("TyphonJS NPM script (test) error: " + err);
 }
 
-// Load `npm-scripts.json` and strip comments.
-var configInfo = JSON.parse(stripJsonComments(fs.readFileSync('./npm-scripts.json', 'utf-8')));
+// Load `.npmscriptrc` and strip comments.
+var configInfo = JSON.parse(stripJsonComments(fs.readFileSync('./.npmscriptrc', 'utf-8')));
 
 // Verify that mocha entry is an object.
 if (typeof configInfo.test !== 'object')
 {
    throw new Error(
-    "TyphonJS NPM script (test) error: 'test' entry is not an object or is missing in 'npm-scripts.json'.");
+    "TyphonJS NPM script (test) error: 'test' entry is not an object or is missing in '.npmscriptrc'.");
 }
 
 var testConfig = configInfo.test;
@@ -62,14 +62,14 @@ var testConfig = configInfo.test;
 if (typeof testConfig.mocha !== 'object')
 {
    throw new Error(
-    "TyphonJS NPM script (test) error: 'test.mocha' entry is not an object or is missing in 'npm-scripts.json'.");
+    "TyphonJS NPM script (test) error: 'test.mocha' entry is not an object or is missing in '.npmscriptrc'.");
 }
 
 // Verify that source entry is a string.
 if (typeof testConfig.mocha.source !== 'string')
 {
    throw new Error(
-    "TyphonJS NPM script (test) error: 'test.mocha.source' entry is not a string or is missing in 'npm-scripts.json'.");
+    "TyphonJS NPM script (test) error: 'test.mocha.source' entry is not a string or is missing in '.npmscriptrc'.");
 }
 
 // Build base execution command.
@@ -81,7 +81,7 @@ if (typeof testConfig.mocha.options !== 'undefined')
    if (!Array.isArray(testConfig.mocha.options))
    {
       throw new Error(
-       "TyphonJS NPM script (test) error: 'test.mocha.options' entry is not an array in 'npm-scripts.json'.");
+       "TyphonJS NPM script (test) error: 'test.mocha.options' entry is not an array in '.npmscriptrc'.");
    }
 
    exec += ' ' + testConfig.mocha.options.join(' ');

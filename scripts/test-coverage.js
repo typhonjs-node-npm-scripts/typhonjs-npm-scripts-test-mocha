@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * test -- Initiates the testing process with Mocha. A valid `npm-scripts.json` configuration file must be located
+ * test -- Initiates the testing process with Mocha. A valid `.npmscriptrc` configuration file must be located
  * in the root path. This configuration file contains the following options:
  * ```
  * (string)          coverage - An optional string to append that may upload results to Codecov on Travis CI.
@@ -15,7 +15,7 @@
  *                                run `./node_modules/.bin/mocha --help` for all available options.
  * ```
  *
- * When running on Travis CI a `test.travis` hash in `npm-scripts.json` may be provided which overrides any
+ * When running on Travis CI a `test.travis` hash in `.npmscriptrc` may be provided which overrides any
  * data stored in the `test` hash. This is useful for specifying the `coverage` command when running on Travis CI.
  *
  */
@@ -24,12 +24,12 @@ var cp =                require('child_process');
 var fs =                require('fs-extra');
 var stripJsonComments = require('strip-json-comments');
 
-// Verify that `npm-scripts.json` exists.
+// Verify that `.npmscriptrc` exists.
 try
 {
-   if (!fs.statSync('./npm-scripts.json').isFile())
+   if (!fs.statSync('./.npmscriptrc').isFile())
    {
-      throw new Error("'npm-scripts.json' not found in root path: " + process.cwd());
+      throw new Error("'.npmscriptrc' not found in root path: " + process.cwd());
    }
 }
 catch(err)
@@ -63,14 +63,14 @@ catch(err)
    throw new Error("TyphonJS NPM script (test-coverage) error: " + err);
 }
 
-// Load `npm-scripts.json` and strip comments.
-var configInfo = JSON.parse(stripJsonComments(fs.readFileSync('./npm-scripts.json', 'utf-8')));
+// Load `.npmscriptrc` and strip comments.
+var configInfo = JSON.parse(stripJsonComments(fs.readFileSync('./.npmscriptrc', 'utf-8')));
 
 // Verify that mocha entry is an object.
 if (typeof configInfo.test !== 'object')
 {
    throw new Error(
-    "TyphonJS NPM script (test-coverage) error: 'test' entry is not an object or is missing in 'npm-scripts.json'.");
+    "TyphonJS NPM script (test-coverage) error: 'test' entry is not an object or is missing in '.npmscriptrc'.");
 }
 
 var testConfig = configInfo.test;
@@ -88,7 +88,7 @@ if (typeof testConfig.istanbul !== 'object')
 {
    throw new Error(
     "TyphonJS NPM script (test-coverage) error: 'test.istanbul' entry is not an object or is missing in "
-     + "'npm-scripts.json'.");
+     + "'.npmscriptrc'.");
 }
 
 // Verify that Istanbul command entry is a string.
@@ -96,7 +96,7 @@ if (typeof testConfig.istanbul.command !== 'string')
 {
    throw new Error(
     "TyphonJS NPM script (test-coverage) error: 'test.istanbul.command' entry is not a string or is missing in "
-     + "'npm-scripts.json'.");
+     + "'.npmscriptrc'.");
 }
 
 var istanbulOptions = testConfig.istanbul.command;
@@ -108,7 +108,7 @@ if (typeof testConfig.istanbul.options !== 'undefined')
    {
       throw new Error(
        "TyphonJS NPM script (test-coverage) error: 'test.istanbul.options' entry is not an array in "
-        + "'npm-scripts.json'.");
+        + "'.npmscriptrc'.");
    }
 
    istanbulOptions += ' ' + testConfig.istanbul.options.join(' ');
@@ -119,7 +119,7 @@ if (typeof testConfig.mocha !== 'object')
 {
    throw new Error(
     "TyphonJS NPM script (test-coverage) error: 'test.mocha' entry is not an object or is missing in "
-     + "'npm-scripts.json'.");
+     + "'.npmscriptrc'.");
 }
 
 // Verify that source entry is a string.
@@ -127,7 +127,7 @@ if (typeof testConfig.mocha.source !== 'string')
 {
    throw new Error(
     "TyphonJS NPM script (test-coverage) error: 'test.mocha.source' entry is not a string or is missing in "
-     + "'npm-scripts.json'.");
+     + "'.npmscriptrc'.");
 }
 
 // Create mocha options.
@@ -139,7 +139,7 @@ if (typeof testConfig.mocha.options !== 'undefined')
    if (!Array.isArray(testConfig.mocha.options))
    {
       throw new Error(
-       "TyphonJS NPM script (test-coverage) error: 'test.mocha.options' entry is not an array in 'npm-scripts.json'.");
+       "TyphonJS NPM script (test-coverage) error: 'test.mocha.options' entry is not an array in '.npmscriptrc'.");
    }
 
    mochaOptions += ' ' + testConfig.mocha.options.join(' ');
