@@ -11,7 +11,7 @@
 
 Provides NPM scripts for testing with [Mocha](https://mochajs.org/) / [Chai](http://chaijs.com/), generating code coverage with [Istanbul](https://gotwarlost.github.io/istanbul/) and uploading results to [Codecov](https://codecov.io/) when running continuous integration on [Travis CI](https://travis-ci.org/) for all TyphonJS NPM modules and beyond.
 
-This NPM module uses entries defined in the `test` entry located in `npm-scripts.json` in the root path of a project. This module works for both ES5 and ES6+ testing, but please note the usage instructions below for ES6 testing.
+This NPM module uses entries defined in the `test` entry located in `.npmscriptrc` in the root path of a project. This module works for both ES5 and ES6+ testing, but please note the usage instructions below for ES6 testing.
 
 For a comprehensive ES6 build / testing / publishing NPM module please see [typhonjs-npm-build-test](https://www.npmjs.com/package/typhonjs-npm-build-test) as it combines this module for testing  along with transpiling ES6 sources with Babel via 
 [typhonjs-npm-scripts-build-babel](https://www.npmjs.com/package/typhonjs-npm-scripts-build-babel) and pre-publish script detection via [typhonjs-npm-scripts-publish](https://www.npmjs.com/package/typhonjs-npm-scripts-publish). For a full listing of all TyphonJS NPM script modules available please see [typhonjs-node-npm](https://github.com/typhonjs-node-npm) organization on GitHub.
@@ -39,7 +39,7 @@ To configure the test scripts provide this entry in `package.json` scripts entry
 
 Please note the usage of `babel-node` to invoke the test scripts. If you are using ES6 for tests and sources and have Babel or [typhonjs-npm-scripts-build-babel](https://www.npmjs.com/package/typhonjs-npm-scripts-build-babel) installed use `babel-node` instead of `node`.
 
-`npm-scripts.json` must be defined in the root path and contain an object hash `test` hash
+`.npmscriptrc` must be defined in the root path and contain a JSON formatted object hash `test` hash
 with the following options:
 ```
 (string)          coverage - An optional string to append that may upload results to Codecov on Travis CI.
@@ -53,10 +53,10 @@ with the following options:
                                run `./node_modules/.bin/mocha --help` for all available options.
 ```
 
-When running on Travis CI a `test.travis` hash in `npm-scripts.json` may be provided which overrides any
+When running on Travis CI a `test.travis` hash in `.npmscriptrc` may be provided which overrides any
 data stored in the `test` hash. This is useful for specifying the `coverage` command when running on Travis CI.
 
-A basic configuration for testing ES6 NPM modules in `npm-scripts.json` follows:
+A basic configuration for testing ES6 NPM modules in `.npmscriptrc` follows:
 ```
 {
    "test":
@@ -70,6 +70,6 @@ A basic configuration for testing ES6 NPM modules in `npm-scripts.json` follows:
 }
 ```
 
-Please note that you can add comments to `npm-scripts.json`. Also please note that if you are testing ES6 sources you must include `"--compilers js:babel-register"` in the mocha options. 
+Please note that you can add comments to `.npmscriptrc`. Also please note that if you are testing ES6 sources you must include `"--compilers js:babel-register"` in the mocha options. 
 
 By default coverage results from Istanbul are output to `./coverage`. The `test-coverage.js` script only empties `./coverage` when executed, so if you change the directory Istanbul outputs to please note that it won't be cleared automatically.
