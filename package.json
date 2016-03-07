@@ -1,6 +1,6 @@
 {
   "name": "typhonjs-npm-scripts-test-mocha",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "homepage": "https://github.com/typhonjs-node-npm/typhonjs-npm-scripts-test-mocha",
   "description": "Provides NPM scripts for testing projects using Istanbul and Mocha for all TyphonJS NPM modules and beyond.",
   "license": "MPL-2.0",
@@ -18,15 +18,16 @@
     }
   ],
   "dependencies": {
-    "chai": "^3.5.0",
-    "codecov.io": "^0.1.6",
-    "fs-extra": "^0.26.5",
+    "chai": "^3.0.0",
+    "codecov.io": "^0.1.0",
+    "eslint": "^2.0.0",
+    "fs-extra": "^0.26.0",
     "istanbul": "^1.0.0-alpha.2",
-    "mocha": "^2.4.5",
-    "strip-json-comments": "^2.0.1"
+    "mocha": "^2.0.0",
+    "strip-json-comments": "^2.0.0"
   },
   "devDependencies": {
-    "typhonjs-config-eslint": "^0.3.0"
+    "typhonjs-config-eslint": "^0.4.0"
   },
   "keywords": [
     "typhonjs",
@@ -43,6 +44,7 @@
     "npm" : ">=3.x"
   },
   "scripts": {
+    "eslint": "eslint .",
     "test": "node ./test-scripts/scripts/testAll.js"
   },
   "files": [

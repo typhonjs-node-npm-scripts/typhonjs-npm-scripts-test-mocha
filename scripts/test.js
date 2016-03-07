@@ -28,7 +28,7 @@ try
       throw new Error("'.npmscriptrc' not found in root path.");
    }
 }
-catch(err)
+catch (err)
 {
    throw new Error("TyphonJS NPM script (test) error: " + err);
 }
@@ -41,7 +41,7 @@ try
       throw new Error("could not locate Mocha at './node_modules/.bin/mocha'.");
    }
 }
-catch(err)
+catch (err)
 {
    throw new Error("TyphonJS NPM script (test) error: " + err);
 }

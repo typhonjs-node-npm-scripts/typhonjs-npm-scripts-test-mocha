@@ -32,7 +32,7 @@ try
       throw new Error("'.npmscriptrc' not found in root path: " + process.cwd());
    }
 }
-catch(err)
+catch (err)
 {
    throw new Error("TyphonJS NPM script (test-coverage) error: " + err);
 }
@@ -45,7 +45,7 @@ try
       throw new Error("could not locate Istanbul at './node_modules/.bin/istanbul'.");
    }
 }
-catch(err)
+catch (err)
 {
    throw new Error("TyphonJS NPM script (test-coverage) error: " + err);
 }
@@ -58,7 +58,7 @@ try
       throw new Error("could not locate Mocha at './node_modules/.bin/mocha'.");
    }
 }
-catch(err)
+catch (err)
 {
    throw new Error("TyphonJS NPM script (test-coverage) error: " + err);
 }
