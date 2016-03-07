@@ -1,4 +1,4 @@
-![typhonjs-npm-scripts-test-mocha](http://i.imgur.com/MhmA73N.png)
+![typhonjs-npm-scripts-test-mocha](http://i.imgur.com/yLxIcz6.png)
 
 [![NPM](https://img.shields.io/npm/v/typhonjs-npm-scripts-test-mocha.svg?label=npm)](https://www.npmjs.com/package/typhonjs-npm-scripts-test-mocha)
 [![Code Style](https://img.shields.io/badge/code%20style-allman-yellowgreen.svg?style=flat)](https://en.wikipedia.org/wiki/Indent_style#Allman_style)
@@ -9,7 +9,7 @@
 [![Coverage](https://img.shields.io/codecov/c/github/typhonjs-node-npm/typhonjs-npm-scripts-test-mocha.svg)](https://codecov.io/github/typhonjs-node-npm/typhonjs-npm-scripts-test-mocha)
 [![Dependency Status](https://www.versioneye.com/user/projects/56cea0186b21e5003d47429f/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56cea0186b21e5003d47429f)
 
-Provides NPM scripts for testing with [Mocha](https://mochajs.org/) / [Chai](http://chaijs.com/), generating code coverage with [Istanbul](https://gotwarlost.github.io/istanbul/) and uploading results to [Codecov](https://codecov.io/) when running continuous integration on [Travis CI](https://travis-ci.org/) for all TyphonJS NPM modules and beyond.
+Provides NPM scripts for testing with [Mocha](https://mochajs.org/) / [Chai](http://chaijs.com/), generating code coverage with [Istanbul](https://gotwarlost.github.io/istanbul/) and uploading results to [Codecov](https://codecov.io/) when running continuous integration on [Travis CI](https://travis-ci.org/) for all TyphonJS NPM modules and beyond. Linting support is also enabled via [ESLint](http://eslint.org/).
 
 This NPM module uses entries defined in the `test` entry located in `.npmscriptrc` in the root path of a project. This module works for both ES5 and ES6+ testing, but please note the usage instructions below for ES6 testing.
 
