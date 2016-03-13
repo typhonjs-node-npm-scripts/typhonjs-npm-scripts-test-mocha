@@ -31,6 +31,7 @@ var fs =                require('fs-extra');
 var stripJsonComments = require('strip-json-comments');
 
 // Verify that `.npmscriptrc` exists.
+/* istanbul ignore next */
 try
 {
    if (!fs.statSync('./.npmscriptrc').isFile())
@@ -44,6 +45,7 @@ catch (err)
 }
 
 // Verify that `Istanbul` exists.
+/* istanbul ignore next */
 try
 {
    if (!fs.statSync('./node_modules/.bin/istanbul').isFile())
@@ -57,6 +59,7 @@ catch (err)
 }
 
 // Verify that `Mocha` exists.
+/* istanbul ignore next */
 try
 {
    if (!fs.statSync('./node_modules/.bin/mocha').isFile())
@@ -73,6 +76,7 @@ catch (err)
 var configInfo = JSON.parse(stripJsonComments(fs.readFileSync('./.npmscriptrc', 'utf-8')));
 
 // Verify that mocha entry is an object.
+/* istanbul ignore if */
 if (typeof configInfo.test !== 'object')
 {
    throw new Error(
@@ -90,6 +94,7 @@ if (process.env.TRAVIS && typeof testConfig.travis === 'object')
 }
 
 // Verify that Istanbul entry is an object.
+/* istanbul ignore if */
 if (typeof testConfig.istanbul !== 'object')
 {
    throw new Error(
@@ -98,6 +103,7 @@ if (typeof testConfig.istanbul !== 'object')
 }
 
 // Verify that Istanbul command entry is a string.
+/* istanbul ignore if */
 if (typeof testConfig.istanbul.command !== 'string')
 {
    throw new Error(
@@ -110,6 +116,7 @@ var istanbulOptions = testConfig.istanbul.command;
 // Add any Istanbul optional parameters.
 if (typeof testConfig.istanbul.options !== 'undefined')
 {
+   /* istanbul ignore if */
    if (!Array.isArray(testConfig.istanbul.options))
    {
       throw new Error(
@@ -121,6 +128,7 @@ if (typeof testConfig.istanbul.options !== 'undefined')
 }
 
 // Verify that mocha entry is an object.
+/* istanbul ignore if */
 if (typeof testConfig.mocha !== 'object')
 {
    throw new Error(
@@ -129,6 +137,7 @@ if (typeof testConfig.mocha !== 'object')
 }
 
 // Verify that source entry is a string.
+/* istanbul ignore if */
 if (typeof testConfig.mocha.source !== 'string')
 {
    throw new Error(
@@ -142,6 +151,7 @@ var mochaOptions = '';
 // Add any optional parameters.
 if (typeof testConfig.mocha.options !== 'undefined')
 {
+   /* istanbul ignore if */
    if (!Array.isArray(testConfig.mocha.options))
    {
       throw new Error(
