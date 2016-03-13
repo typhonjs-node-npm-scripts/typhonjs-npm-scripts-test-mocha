@@ -2,26 +2,30 @@
 
 [![NPM](https://img.shields.io/npm/v/typhonjs-npm-scripts-test-mocha.svg?label=npm)](https://www.npmjs.com/package/typhonjs-npm-scripts-test-mocha)
 [![Code Style](https://img.shields.io/badge/code%20style-allman-yellowgreen.svg?style=flat)](https://en.wikipedia.org/wiki/Indent_style#Allman_style)
-[![License](https://img.shields.io/badge/license-MPLv2-yellowgreen.svg?style=flat)](https://github.com/typhonjs-node-npm/typhonjs-npm-scripts-test-mocha/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/license-MPLv2-yellowgreen.svg?style=flat)](https://github.com/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha/blob/master/LICENSE)
 [![Gitter](https://img.shields.io/gitter/room/typhonjs/TyphonJS.svg)](https://gitter.im/typhonjs/TyphonJS)
 
-[![Build Status](https://travis-ci.org/typhonjs-node-npm/typhonjs-npm-scripts-test-mocha.svg?branch=master)](https://travis-ci.org/typhonjs-node-npm/typhonjs-npm-scripts-test-mocha)
-[![Coverage](https://img.shields.io/codecov/c/github/typhonjs-node-npm/typhonjs-npm-scripts-test-mocha.svg)](https://codecov.io/github/typhonjs-node-npm/typhonjs-npm-scripts-test-mocha)
+[![Build Status](https://travis-ci.org/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha.svg?branch=master)](https://travis-ci.org/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha)
+[![Coverage](https://img.shields.io/codecov/c/github/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha.svg)](https://codecov.io/github/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha)
 [![Dependency Status](https://www.versioneye.com/user/projects/56cea0186b21e5003d47429f/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56cea0186b21e5003d47429f)
 
 Provides NPM scripts for testing with [Mocha](https://mochajs.org/) / [Chai](http://chaijs.com/), generating code coverage with [Istanbul](https://gotwarlost.github.io/istanbul/) and uploading results to [Codecov](https://codecov.io/) when running continuous integration on [Travis CI](https://travis-ci.org/) for all TyphonJS NPM modules and beyond. Linting support is also enabled via [ESLint](http://eslint.org/).
 
 This NPM module uses entries defined in the `test` entry located in `.npmscriptrc` in the root path of a project. This module works for both ES5 and ES6+ testing, but please note the usage instructions below for ES6 testing.
 
-For a comprehensive ES6 build / testing / publishing NPM module please see [typhonjs-npm-build-test](https://www.npmjs.com/package/typhonjs-npm-build-test) as it combines this module for testing  along with transpiling ES6 sources with Babel via 
-[typhonjs-npm-scripts-build-babel](https://www.npmjs.com/package/typhonjs-npm-scripts-build-babel) and pre-publish script detection via [typhonjs-npm-scripts-publish](https://www.npmjs.com/package/typhonjs-npm-scripts-publish). For a full listing of all TyphonJS NPM script modules available please see [typhonjs-node-npm](https://github.com/typhonjs-node-npm) organization on GitHub.
+For a comprehensive ES6 build / testing / publishing NPM module please see [typhonjs-npm-build-test](https://www.npmjs.com/package/typhonjs-npm-build-test) as it combines this module for testing  along with transpiling ES6 sources with Babel, pre-publish script detection, ESDoc dependencies and an Istanbul instrumentation hook for JSPM / SystemJS tests. For a full listing of all TyphonJS NPM script modules available please see [typhonjs-node-npm-scripts](https://github.com/typhonjs-node-npm-scripts) organization on GitHub.
 
 There are two testing scripts provided by this module:
 
-- [test.js](https://github.com/typhonjs-node-npm/typhonjs-npm-scripts-test-mocha/blob/master/scripts/test.js)
-- [test-coverage.js](https://github.com/typhonjs-node-npm/typhonjs-npm-scripts-test-mocha/blob/master/scripts/test-coverage.js)
+- [test.js](https://github.com/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha/blob/master/scripts/test.js)
+- [test-coverage.js](https://github.com/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha/blob/master/scripts/test-coverage.js)
+- [test-coverage-report.js](https://github.com/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha/blob/master/scripts/test-coverage-report.js)
 
-The main difference is that `test-coverage.js` provides code coverage with Istanbul and if running on Travis CI also allows the addition of options to upload results to Codecov. 
+`test.js` just runs Mocha tests.
+
+Both `test-coverage.js` and `test-coverage-report.js` generate code coverage with Istanbul. Also an additional `coverage` command in `.npmscriptrc` is executed if defined which is useful when running on Travis CI to upload results to Codecov.
+
+The main difference between `test-coverage.js` and `test-coverage-report.js` is that `istanbul report` is automatically run after the initial `istanbul` command from `.npmscriptrc` is executed. This is necessary for instance when instrumenting JSPM / SystemJS tests.
 
 ------
 
@@ -29,7 +33,7 @@ To configure the test scripts provide this entry in `package.json` scripts entry
 
 ```
   "devDependencies": {
-    "typhonjs-npm-scripts-test-mocha": "^0.0.8"
+    "typhonjs-npm-scripts-test-mocha": "^0.0.11"
   },
   "scripts": {
     "test": "babel-node ./node_modules/typhonjs-npm-scripts-test-mocha/scripts/test.js",
@@ -62,7 +66,7 @@ A basic configuration for testing ES6 NPM modules in `.npmscriptrc` follows:
    "test":
    {
       // Provides a `coverage` handling command that is appended when running on Travis CI.
-      "travis": { "coverage": "&& cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js" },
+      "travis": { "coverage": "cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js" },
 `
       "istanbul": { "command": "cover", "options": [ "--report lcovonly" ] },
       "mocha": { "source": "./test/src", "options": [ "--compilers js:babel-register", "-t 120000 --recursive" ] }
