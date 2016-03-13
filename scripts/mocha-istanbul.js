@@ -1,14 +1,16 @@
 'use strict';
 
 /**
- * test -- Initiates the testing process with Mocha. A valid `.npmscriptrc` configuration file must be located
+ * mocha-istanbul -- Initiates the testing process with Mocha. A valid `.npmscriptrc` configuration file must be located
  * in the root path. This configuration file contains the following options:
  * ```
  * (string)          report - An optional command to execute that may upload results to Codecov on Travis CI.
+ *
  * (object)          istanbul - An object hash containing Istanbul configuration with the following options:
  *    (string)          command - The Istanbul command to execute (cover, check-coverage, instrument, report).
  *    (Array<string>)   options - An array of optional parameters which are appended to the invocation of Istanbul.
  *                                Please run `./node_modules/.bin/istanbul help` for all available options.
+ *
  * (object)          mocha - An object hash containing Mocha configuration with the following options:
  *    (string)          source - The test source directory.
  *    (Array<string>)   options - An array of optional parameters which are prepended to the invocation of Mocha. Please
