@@ -15,7 +15,7 @@ This NPM module uses entries defined in the `test` entry located in `.npmscriptr
 
 For a comprehensive ES6 build / testing / publishing NPM module please see [typhonjs-npm-build-test](https://www.npmjs.com/package/typhonjs-npm-build-test) as it combines this module for testing  along with transpiling ES6 sources with Babel, pre-publish script detection, ESDoc dependencies and an Istanbul instrumentation hook for JSPM / SystemJS tests. For a full listing of all TyphonJS NPM script modules available please see [typhonjs-node-npm-scripts](https://github.com/typhonjs-node-npm-scripts) organization on GitHub.
 
-There are two testing scripts provided by this module:
+There are three testing scripts provided by this module:
 
 - [mocha.js](https://github.com/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha/blob/master/scripts/mocha.js)
 - [mocha-istanbul.js](https://github.com/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha/blob/master/scripts/mocha-istanbul.js)
@@ -23,7 +23,7 @@ There are two testing scripts provided by this module:
 
 `mocha.js` just runs Mocha tests.
 
-Both `mocha-istanbul.js` and `mocha-istanbul-report.js` execute Mocha tests and Istanbul. Also an additional `report` command in `.npmscriptrc` is executed if defined which is useful when running on Travis CI to upload results to Codecov.
+Both `mocha-istanbul.js` and `mocha-istanbul-report.js` execute Mocha tests and Istanbul. Also an additional `report` command in `.npmscriptrc` is executed afterward if defined which is useful when running on Travis CI to upload results to Codecov.
 
 The main difference between `mocha-istanbul.js` and `mocha-istanbul-report.js` is that `istanbul report` is automatically run after the initial `istanbul` command from `.npmscriptrc` is executed. This is necessary for instance when instrumenting JSPM / SystemJS tests.
 
@@ -47,10 +47,12 @@ Please note the usage of `babel-node` to invoke the test scripts. If you are usi
 with the following options:
 ```
 (string)          report - An optional command to execute that may upload results to Codecov on Travis CI.
+
 (object)          istanbul - An object hash containing Istanbul configuration with the following options:
    (string)          command - The Istanbul command to execute (cover, check-coverage, instrument, report).
    (Array<string>)   options - An array of optional parameters which are appended to the invocation of Istanbul.
                                Please run `./node_modules/.bin/istanbul help` for all available options.
+                               
 (object)          mocha - An object hash containing Mocha configuration with the following options:
    (string)          source - The test source directory.
    (Array<string>)   options - An array of optional parameters which are prepended to the invocation of Mocha. Please
