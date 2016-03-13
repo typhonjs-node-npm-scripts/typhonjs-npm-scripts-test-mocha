@@ -1,6 +1,6 @@
 {
   "name": "typhonjs-npm-scripts-test-mocha",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "homepage": "https://github.com/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha",
   "description": "Provides NPM scripts for testing projects using Istanbul and Mocha for all TyphonJS NPM modules and beyond.",
   "license": "MPL-2.0",
