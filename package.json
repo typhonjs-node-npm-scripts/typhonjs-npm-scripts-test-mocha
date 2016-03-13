@@ -48,7 +48,8 @@
     "test": "node ./test-scripts/scripts/testAll.js"
   },
   "files": [
-    "scripts"
+    "scripts",
+    "AUTHORS.md"
   ],
   "directories": {},
   "bugs": {
