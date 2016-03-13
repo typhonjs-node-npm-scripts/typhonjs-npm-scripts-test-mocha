@@ -1,10 +1,10 @@
 'use strict';
 
 /**
- * test -- Initiates the testing process with Mocha. A valid `.npmscriptrc` configuration file must be located
- * in the root path. This configuration file contains the following options:
+ * test -- Initiates the testing process with Mocha & Istanbul. A valid `.npmscriptrc` configuration file must be
+ * located in the root path. This configuration file contains the following options:
  * ```
- * (string)          coverage - An optional string to append that may upload results to Codecov on Travis CI.
+ * (string)          report - An optional command to execute that may upload results to Codecov on Travis CI.
  * (object)          istanbul - An object hash containing Istanbul configuration with the following options:
  *    (string)          command - The Istanbul command to execute (cover, check-coverage, instrument, report).
  *    (Array<string>)   options - An array of optional parameters which are appended to the invocation of Istanbul.
@@ -16,7 +16,7 @@
  * ```
  *
  * When running on Travis CI a `test.travis` hash in `.npmscriptrc` may be provided which overrides any
- * data stored in the `test` hash. This is useful for specifying the `coverage` command when running on Travis CI.
+ * data stored in the `test` hash. This is useful for specifying the `report` command when running on Travis CI.
  *
  */
 
@@ -88,7 +88,7 @@ if (typeof testConfig.istanbul !== 'object')
 {
    throw new Error(
     "TyphonJS NPM script (test-coverage) error: 'test.istanbul' entry is not an object or is missing in "
-     + "'.npmscriptrc'.");
+    + "'.npmscriptrc'.");
 }
 
 // Verify that Istanbul command entry is a string.
@@ -96,7 +96,7 @@ if (typeof testConfig.istanbul.command !== 'string')
 {
    throw new Error(
     "TyphonJS NPM script (test-coverage) error: 'test.istanbul.command' entry is not a string or is missing in "
-     + "'.npmscriptrc'.");
+    + "'.npmscriptrc'.");
 }
 
 var istanbulOptions = testConfig.istanbul.command;
@@ -108,7 +108,7 @@ if (typeof testConfig.istanbul.options !== 'undefined')
    {
       throw new Error(
        "TyphonJS NPM script (test-coverage) error: 'test.istanbul.options' entry is not an array in "
-        + "'.npmscriptrc'.");
+       + "'.npmscriptrc'.");
    }
 
    istanbulOptions += ' ' + testConfig.istanbul.options.join(' ');
@@ -119,7 +119,7 @@ if (typeof testConfig.mocha !== 'object')
 {
    throw new Error(
     "TyphonJS NPM script (test-coverage) error: 'test.mocha' entry is not an object or is missing in "
-     + "'.npmscriptrc'.");
+    + "'.npmscriptrc'.");
 }
 
 // Verify that source entry is a string.
@@ -127,7 +127,7 @@ if (typeof testConfig.mocha.source !== 'string')
 {
    throw new Error(
     "TyphonJS NPM script (test-coverage) error: 'test.mocha.source' entry is not a string or is missing in "
-     + "'.npmscriptrc'.");
+    + "'.npmscriptrc'.");
 }
 
 // Create mocha options.
@@ -159,15 +159,21 @@ fs.emptyDirSync('./coverage');
 process.stdout.write('Executing: ' + exec + '\n');
 cp.execSync(exec, { stdio: 'inherit' });
 
-// Load any coverage command
-var coverageCommand = '';
+// In some cases such as instrumenting JSPM / SystemJS tests `Istanbul report` needs to be run again for all sources to
+// be represented in report.
+exec = './node_modules/.bin/istanbul report';
+process.stdout.write('Executing: ' + exec + '\n');
+cp.execSync(exec, { stdio: 'inherit' });
 
-if (typeof testConfig.coverage === 'string') { coverageCommand = testConfig.coverage; }
+// Load any report command
+var reportCommand = '';
+
+if (typeof testConfig.report === 'string') { reportCommand = testConfig.report; }
 
 // Execute any coverage command
-if (coverageCommand !== '')
+if (reportCommand !== '')
 {
-   exec = coverageCommand;
+   exec = reportCommand;
    process.stdout.write('Executing: ' + exec + '\n');
    cp.execSync(exec, { stdio: 'inherit' });
 }

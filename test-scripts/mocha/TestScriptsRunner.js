@@ -15,15 +15,15 @@ fs.emptyDirSync('./coverage-test');
 describe('Script Test', function()
 {
    /**
-    * Test `../../scripts/test.js`.
+    * Test `../../scripts/mocha.js`.
     */
    it('test', function()
    {
-      require('../../scripts/test.js');
+      require('../../scripts/mocha.js');
    });
 
    /**
-    * Test `../../scripts/test-coverage.js`.
+    * Test `../../scripts/mocha-istanbul.js`.
     */
    it('test-coverage', function()
    {
@@ -34,7 +34,7 @@ describe('Script Test', function()
       fs.emptyDirSync('./coverage');
 
       // Instruments test-coverage script.
-      require('../../scripts/test-coverage.js');
+      require('../../scripts/mocha-istanbul.js');
 
       // Verify that there are files / directories in `./coverage`.
 
@@ -48,7 +48,7 @@ describe('Script Test', function()
    });
 
    /**
-    * Test `../../scripts/test-coverage-report.js`.
+    * Test `../../scripts/mocha-istanbul-report.js`.
     */
    it('test-coverage', function()
    {
@@ -59,7 +59,7 @@ describe('Script Test', function()
       fs.emptyDirSync('./coverage');
 
       // Instruments test-coverage script.
-      require('../../scripts/test-coverage-report.js');
+      require('../../scripts/mocha-istanbul-report.js');
 
       // Verify that there are files / directories in `./coverage`.
 
