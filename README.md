@@ -17,15 +17,15 @@ For a comprehensive ES6 build / testing / publishing NPM module please see [typh
 
 There are two testing scripts provided by this module:
 
-- [test.js](https://github.com/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha/blob/master/scripts/test.js)
-- [test-coverage.js](https://github.com/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha/blob/master/scripts/test-coverage.js)
-- [test-coverage-report.js](https://github.com/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha/blob/master/scripts/test-coverage-report.js)
+- [mocha.js](https://github.com/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha/blob/master/scripts/mocha.js)
+- [mocha-istanbul.js](https://github.com/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha/blob/master/scripts/mocha-istanbul.js)
+- [mocha-istanbul-report.js](https://github.com/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha/blob/master/scripts/mocha-istanbul-report.js)
 
-`test.js` just runs Mocha tests.
+`mocha.js` just runs Mocha tests.
 
-Both `test-coverage.js` and `test-coverage-report.js` generate code coverage with Istanbul. Also an additional `coverage` command in `.npmscriptrc` is executed if defined which is useful when running on Travis CI to upload results to Codecov.
+Both `mocha-istanbul.js` and `mocha-istanbul-report.js` execute Mocha tests and Istanbul. Also an additional `report` command in `.npmscriptrc` is executed if defined which is useful when running on Travis CI to upload results to Codecov.
 
-The main difference between `test-coverage.js` and `test-coverage-report.js` is that `istanbul report` is automatically run after the initial `istanbul` command from `.npmscriptrc` is executed. This is necessary for instance when instrumenting JSPM / SystemJS tests.
+The main difference between `mocha-istanbul.js` and `mocha-istanbul-report.js` is that `istanbul report` is automatically run after the initial `istanbul` command from `.npmscriptrc` is executed. This is necessary for instance when instrumenting JSPM / SystemJS tests.
 
 ------
 
@@ -36,8 +36,8 @@ To configure the test scripts provide this entry in `package.json` scripts entry
     "typhonjs-npm-scripts-test-mocha": "^0.0.11"
   },
   "scripts": {
-    "test": "babel-node ./node_modules/typhonjs-npm-scripts-test-mocha/scripts/test.js",
-    "test-coverage": "babel-node ./node_modules/typhonjs-npm-scripts-test-mocha/scripts/test-coverage.js"
+    "test": "babel-node ./node_modules/typhonjs-npm-scripts-test-mocha/scripts/mocha.js",
+    "test-coverage": "babel-node ./node_modules/typhonjs-npm-scripts-test-mocha/scripts/mocha-istanbul.js"
   },
 ```
 
@@ -46,7 +46,7 @@ Please note the usage of `babel-node` to invoke the test scripts. If you are usi
 `.npmscriptrc` must be defined in the root path and contain a JSON formatted object hash `test` hash
 with the following options:
 ```
-(string)          coverage - An optional string to append that may upload results to Codecov on Travis CI.
+(string)          report - An optional command to execute that may upload results to Codecov on Travis CI.
 (object)          istanbul - An object hash containing Istanbul configuration with the following options:
    (string)          command - The Istanbul command to execute (cover, check-coverage, instrument, report).
    (Array<string>)   options - An array of optional parameters which are appended to the invocation of Istanbul.
@@ -65,8 +65,8 @@ A basic configuration for testing ES6 NPM modules in `.npmscriptrc` follows:
 {
    "test":
    {
-      // Provides a `coverage` handling command that is appended when running on Travis CI.
-      "travis": { "coverage": "cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js" },
+      // Provides a report handling command that is executed after running tests / coverage when running on Travis CI.
+      "travis": { "report": "cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js" },
 `
       "istanbul": { "command": "cover", "options": [ "--report lcovonly" ] },
       "mocha": { "source": "./test/src", "options": [ "--compilers js:babel-register", "-t 120000 --recursive" ] }
