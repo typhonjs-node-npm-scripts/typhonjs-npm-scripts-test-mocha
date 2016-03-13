@@ -88,7 +88,7 @@ if (typeof testConfig.istanbul !== 'object')
 {
    throw new Error(
     "TyphonJS NPM script (test-coverage) error: 'test.istanbul' entry is not an object or is missing in "
-     + "'.npmscriptrc'.");
+    + "'.npmscriptrc'.");
 }
 
 // Verify that Istanbul command entry is a string.
@@ -96,7 +96,7 @@ if (typeof testConfig.istanbul.command !== 'string')
 {
    throw new Error(
     "TyphonJS NPM script (test-coverage) error: 'test.istanbul.command' entry is not a string or is missing in "
-     + "'.npmscriptrc'.");
+    + "'.npmscriptrc'.");
 }
 
 var istanbulOptions = testConfig.istanbul.command;
@@ -108,7 +108,7 @@ if (typeof testConfig.istanbul.options !== 'undefined')
    {
       throw new Error(
        "TyphonJS NPM script (test-coverage) error: 'test.istanbul.options' entry is not an array in "
-        + "'.npmscriptrc'.");
+       + "'.npmscriptrc'.");
    }
 
    istanbulOptions += ' ' + testConfig.istanbul.options.join(' ');
@@ -119,7 +119,7 @@ if (typeof testConfig.mocha !== 'object')
 {
    throw new Error(
     "TyphonJS NPM script (test-coverage) error: 'test.mocha' entry is not an object or is missing in "
-     + "'.npmscriptrc'.");
+    + "'.npmscriptrc'.");
 }
 
 // Verify that source entry is a string.
@@ -127,7 +127,7 @@ if (typeof testConfig.mocha.source !== 'string')
 {
    throw new Error(
     "TyphonJS NPM script (test-coverage) error: 'test.mocha.source' entry is not a string or is missing in "
-     + "'.npmscriptrc'.");
+    + "'.npmscriptrc'.");
 }
 
 // Create mocha options.
@@ -156,6 +156,12 @@ var exec = './node_modules/.bin/istanbul ' + istanbulOptions + ' ./node_modules/
 fs.emptyDirSync('./coverage');
 
 // Notify what command is being executed then execute it.
+process.stdout.write('Executing: ' + exec + '\n');
+cp.execSync(exec, { stdio: 'inherit' });
+
+// In some cases such as instrumenting JSPM / SystemJS tests `Istanbul report` needs to be run again for source to be
+// represented in report.
+exec = './node_modules/.bin/istanbul report';
 process.stdout.write('Executing: ' + exec + '\n');
 cp.execSync(exec, { stdio: 'inherit' });
 

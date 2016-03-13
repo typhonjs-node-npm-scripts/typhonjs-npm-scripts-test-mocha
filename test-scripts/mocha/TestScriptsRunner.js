@@ -46,4 +46,29 @@ describe('Script Test', function()
       // Restore Travis environment variable
       if (typeof origTravis !== 'undefined') { process.env.TRAVIS = origTravis; }
    });
+
+   /**
+    * Test `../../scripts/test-coverage-report.js`.
+    */
+   it('test-coverage', function()
+   {
+      // Store current TRAVIS environment variable.
+      var origTravis = process.env.TRAVIS;
+      delete process.env.TRAVIS;
+
+      fs.emptyDirSync('./coverage');
+
+      // Instruments test-coverage script.
+      require('../../scripts/test-coverage-report.js');
+
+      // Verify that there are files / directories in `./coverage`.
+
+      var files = fs.readdirSync('./coverage');
+      assert(files.length > 0);
+
+      fs.emptyDirSync('./coverage');
+
+      // Restore Travis environment variable
+      if (typeof origTravis !== 'undefined') { process.env.TRAVIS = origTravis; }
+   });
 });
