@@ -7,7 +7,7 @@
 
 [![Build Status](https://travis-ci.org/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha.svg?branch=master)](https://travis-ci.org/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha)
 [![Coverage](https://img.shields.io/codecov/c/github/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha.svg)](https://codecov.io/github/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha)
-[![Dependency Status](https://www.versioneye.com/user/projects/56cea0186b21e5003d47429f/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56cea0186b21e5003d47429f)
+[![Dependency Status](https://www.versioneye.com/user/projects/56e5a053df573d0043113afe/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56e5a053df573d0043113afe)
 
 Provides NPM scripts for testing with [Mocha](https://mochajs.org/) / [Chai](http://chaijs.com/), generating code coverage with [Istanbul](https://gotwarlost.github.io/istanbul/) and uploading results to [Codecov](https://codecov.io/) when running continuous integration on [Travis CI](https://travis-ci.org/) for all TyphonJS NPM modules and beyond. Linting support is also enabled via [ESLint](http://eslint.org/).
 
