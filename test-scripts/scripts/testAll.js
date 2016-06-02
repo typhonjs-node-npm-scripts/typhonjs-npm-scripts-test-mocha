@@ -22,8 +22,7 @@ var exec;
 if (process.env.TRAVIS)
 {
    exec = './node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha ' + istanbulOptions
-    + ' --report lcovonly -- ' + mochaOptions
-     + ' && cat ./coverage-test/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js';
+    + ' --report lcovonly -- ' + mochaOptions + ' && ./node_modules/.bin/codecov';
 }
 else
 {
