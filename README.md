@@ -17,7 +17,7 @@ This NPM module uses entries defined in the `test` entry located in `.npmscriptr
 
 For the latest significant changes please see the [CHANGELOG](https://github.com/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha/blob/master/CHANGELOG.md).
 
-IMPORTANT (deprecation) in `0.2.0`: The [codecov.io](https://github.com/cainus/codecov.io) NPM module has been deprecated and will be removed in a future update in favor of the official [codecov](https://www.npmjs.com/package/codecov) NPM module. You will need to modify `.npmscriptrc` and replace `"travis": { "report": "cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js" },` with `"travis": { "report": "./node_modules/.bin/codecov" },`.
+- IMPORTANT (breaking change): The [codecov.io](https://github.com/cainus/codecov.io) NPM module has been deprecated and also contains potential vulnerabilities and has been removed in favor of the official [codecov](https://www.npmjs.com/package/codecov) NPM module. You will need to modify `.npmscriptrc` and replace `"travis": { "report": "cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js" },` with `"travis": { "report": "./node_modules/.bin/codecov" },`. Apologies for the inconvencience. See CHANGELOG for more details.
 
 Also [snyk](https://www.npmjs.com/package/snyk) has been added which provides monitoring of known vulnerabilities in Node.js npm packages. One can add it to an NPM script on in [Travis CI](https://github.com/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha/blob/master/.travis.yml#L6) add the following: `- snyk test --dev`. 
 
