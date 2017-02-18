@@ -23,7 +23,7 @@
     "eslint": "^3.0.0",
     "eslint-plugin-babel": "^4.0.0",
     "eslint-plugin-flowtype": "^2.0.0",
-    "fs-extra": "^1.0.0",
+    "fs-extra": "^2.0.0",
     "istanbul": "^1.1.0-alpha.1",
     "mocha": "^3.0.0",
     "snyk": "^1.0.0",
