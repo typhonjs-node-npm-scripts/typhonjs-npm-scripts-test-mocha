@@ -1,8 +1,13 @@
+## 0.4.0 (2017-02-18)
+- Added dependencies:
+- eslint-plugin-babel: ^4.0.0
+- eslint-plugin-flowtype: ^2.0.0
+
 ## 0.3.0 (2017-01-10)
 - Upgraded dependencies:
 - eslint: ^3.0.0
 - fs-extra: ^1.0.0
-- istanbul: ^1.1.0-alpha.1,
+- istanbul: ^1.1.0-alpha.1
 - mocha: ^3.0.0
 
 ## 0.2.0 (2016-06-02)
