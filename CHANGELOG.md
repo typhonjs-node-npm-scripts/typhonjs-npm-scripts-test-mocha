@@ -3,6 +3,9 @@
 - eslint-plugin-babel: ^4.0.0
 - eslint-plugin-flowtype: ^2.0.0
 
+- Upgraded dependencies:
+- fs-extra: ^2.0.0
+
 ## 0.3.0 (2017-01-10)
 - Upgraded dependencies:
 - eslint: ^3.0.0
