@@ -41,7 +41,7 @@ To configure the test scripts provide this entry in `package.json` scripts entry
 
 ```
   "devDependencies": {
-    "typhonjs-npm-scripts-test-mocha": "^0.2.0"
+    "typhonjs-npm-scripts-test-mocha": "^0.4.0"
   },
   "scripts": {
     "test": "babel-node ./node_modules/typhonjs-npm-scripts-test-mocha/scripts/mocha.js",
@@ -70,16 +70,20 @@ with the following options:
 When running on Travis CI a `test.travis` hash in `.npmscriptrc` may be provided which overrides any
 data stored in the `test` hash. This is useful for specifying the `coverage` command when running on Travis CI.
 
-A basic configuration for testing ES6 NPM modules in `.npmscriptrc` follows:
+A basic configuration for testing ES6+ NPM modules in `.npmscriptrc` follows:
 ```
 {
    "test":
    {
-      // Provides a report handling command that is executed after running tests / coverage when running on Travis CI.
-      "travis": { "report": "./node_modules/.bin/codecov" },
-`
-      "istanbul": { "command": "cover", "options": [ "--report lcovonly" ] },
-      "mocha": { "source": "./test/src", "options": [ "--compilers js:babel-register", "-t 120000 --recursive" ] }
+      // Provides a `coverage` handling command that is appended when running on Travis CI.
+      "travis":
+      {
+         "istanbul": { "command": "cover", "options": ["--report lcovonly"] },
+         "report": "./node_modules/.bin/codecov"
+      },
+
+      "istanbul": { "command": "cover", "options": ["--include-all-sources --root src"] },
+      "mocha": { "source": "./test/src", "options": ["--compilers js:babel-register", "-t 120000 --recursive"] }
    }
 }
 ```
