@@ -5,7 +5,7 @@
   "description": "Provides NPM scripts for testing projects using Istanbul and Mocha for all TyphonJS NPM modules and beyond.",
   "license": "MPL-2.0",
   "author": {
-    "name": "Mike Leahy"
+    "name": "typhonrt"
   },
   "repository": {
     "type": "git",
@@ -13,7 +13,7 @@
   },
   "maintainers": [
     {
-      "name": "Mike Leahy",
+      "name": "typhonrt",
       "email": "support@typhonjs.io"
     }
   ],
