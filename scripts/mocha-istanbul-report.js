@@ -28,6 +28,7 @@
 
 var cp =                require('child_process');
 var fs =                require('fs-extra');
+var path =              require('path');
 var stripJsonComments = require('strip-json-comments');
 
 var testEntry = 'test';
@@ -74,21 +75,22 @@ try
 {
    if (fs.statSync('./.npmscriptrc.js').isFile())
    {
-      configInfo = require('./.npmscriptrc.js');
+      configInfo = require(path.resolve('./.npmscriptrc.js'));
    }
 }
-catch (err) { /* nop */ }
-
-// Attempt to load `.npmscriptrc` and strip comments.
-/* istanbul ignore next */
-try
+catch (err)
 {
-   if (fs.statSync('./.npmscriptrc').isFile())
+   // Attempt to load `.npmscriptrc` and strip comments.
+   /* istanbul ignore next */
+   try
    {
-      configInfo = JSON.parse(stripJsonComments(fs.readFileSync('./.npmscriptrc', 'utf-8')));
+      if (fs.statSync('./.npmscriptrc').isFile())
+      {
+         configInfo = JSON.parse(stripJsonComments(fs.readFileSync('./.npmscriptrc', 'utf-8')));
+      }
    }
+   catch (err) { /* nop */ }
 }
-catch (err) { /* nop */ }
 
 // Exit now if no configInfo object has been loaded.
 if (typeof configInfo !== 'object')
