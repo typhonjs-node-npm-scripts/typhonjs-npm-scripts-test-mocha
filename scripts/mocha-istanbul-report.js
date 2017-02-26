@@ -36,9 +36,6 @@ var testEntry = 'test';
 if (typeof process.argv[2] === 'string')
 {
    testEntry = process.argv[2];
-
-console.log('!!!!!!!! process.argv: ' + JSON.stringify(process.argv));
-console.log('!!!!!!!! testEntry set to: ' + testEntry);
 }
 
 // Verify that `Istanbul` exists.
