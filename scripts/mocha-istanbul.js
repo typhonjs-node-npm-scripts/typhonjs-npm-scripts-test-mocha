@@ -26,18 +26,12 @@ var cp =                require('child_process');
 var fs =                require('fs-extra');
 var stripJsonComments = require('strip-json-comments');
 
-// Verify that `.npmscriptrc` exists.
-/* istanbul ignore next */
-try
+var testEntry = 'test';
+
+// Potentially set a new testEntry.
+if (typeof process.argv[2] === 'string')
 {
-   if (!fs.statSync('./.npmscriptrc').isFile())
-   {
-      throw new Error("'.npmscriptrc' not found in root path: " + process.cwd());
-   }
-}
-catch (err)
-{
-   throw new Error("TyphonJS NPM script (test-coverage) error: " + err);
+   testEntry = process.argv[2];
 }
 
 // Verify that `Istanbul` exists.
@@ -68,18 +62,45 @@ catch (err)
    throw new Error("TyphonJS NPM script (test-coverage) error: " + err);
 }
 
-// Load `.npmscriptrc` and strip comments.
-var configInfo = JSON.parse(stripJsonComments(fs.readFileSync('./.npmscriptrc', 'utf-8')));
+var configInfo;
+
+// Attempt to require `.npmscriptrc.js`
+/* istanbul ignore next */
+try
+{
+   if (fs.statSync('./.npmscriptrc.js').isFile())
+   {
+      configInfo = require('./.npmscriptrc.js');
+   }
+}
+catch (err) { /* nop */ }
+
+// Attempt to load `.npmscriptrc` and strip comments.
+/* istanbul ignore next */
+try
+{
+   if (fs.statSync('./.npmscriptrc').isFile())
+   {
+      configInfo = JSON.parse(stripJsonComments(fs.readFileSync('./.npmscriptrc', 'utf-8')));
+   }
+}
+catch (err) { /* nop */ }
+
+// Exit now if no configInfo object has been loaded.
+if (typeof configInfo !== 'object')
+{
+   throw new Error("TyphonJS NPM script (test-coverage) could not load `./npmscriptrc.js` or `./npmscriptrc`.");
+}
 
 // Verify that mocha entry is an object.
 /* istanbul ignore if */
-if (typeof configInfo.test !== 'object')
+if (typeof configInfo[testEntry] !== 'object')
 {
    throw new Error(
     "TyphonJS NPM script (test-coverage) error: 'test' entry is not an object or is missing in '.npmscriptrc'.");
 }
 
-var testConfig = configInfo.test;
+var testConfig = configInfo[testEntry];
 
 /**
  * If running on Travis CI potentially copy any overrides from an internal `travis` key in `test` hash.

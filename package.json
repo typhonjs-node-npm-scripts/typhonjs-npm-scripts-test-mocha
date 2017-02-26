@@ -26,7 +26,6 @@
     "fs-extra": "^2.0.0",
     "istanbul": "^1.1.0-alpha.1",
     "mocha": "^3.0.0",
-    "snyk": "^1.0.0",
     "strip-json-comments": "^2.0.0"
   },
   "devDependencies": {
@@ -48,7 +47,12 @@
   },
   "scripts": {
     "eslint": "eslint .",
-    "test": "node ./test-scripts/scripts/testAll.js"
+    "test": "node ./test-scripts/scripts/testAll.js",
+    "test-alternate-mocha": "node ./scripts/mocha.js test-dev",
+    "test-error-mocha": "node ./scripts/mocha.js noentry",
+    "test-mocha": "node ./scripts/mocha.js",
+    "test-mocha-istanbul": "node ./scripts/mocha-istanbul.js",
+    "test-mocha-istanbul-report": "node ./scripts/mocha-istanbul-report.js"
   },
   "files": [
     "scripts",

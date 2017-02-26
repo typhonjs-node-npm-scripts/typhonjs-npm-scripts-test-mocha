@@ -15,18 +15,14 @@ var cp =                require('child_process');
 var fs =                require('fs');
 var stripJsonComments = require('strip-json-comments');
 
-// Verify that `.npmscriptrc` exists.
-/* istanbul ignore next */
-try
+var testEntry = 'test';
+
+// Potentially set a new testEntry.
+if (typeof process.argv[2] === 'string')
 {
-   if (!fs.statSync('./.npmscriptrc').isFile())
-   {
-      throw new Error("'.npmscriptrc' not found in root path.");
-   }
-}
-catch (err)
-{
-   throw new Error("TyphonJS NPM script (test) error: " + err);
+   testEntry = process.argv[2];
+
+
 }
 
 // Verify that `Mocha` exists.
@@ -43,17 +39,44 @@ catch (err)
    throw new Error("TyphonJS NPM script (test) error: " + err);
 }
 
-// Load `.npmscriptrc` and strip comments.
-var configInfo = JSON.parse(stripJsonComments(fs.readFileSync('./.npmscriptrc', 'utf-8')));
+var configInfo;
+
+// Attempt to require `.npmscriptrc.js`
+/* istanbul ignore next */
+try
+{
+   if (fs.statSync('./.npmscriptrc.js').isFile())
+   {
+      configInfo = require('./.npmscriptrc.js');
+   }
+}
+catch (err) { /* nop */ }
+
+// Attempt to load `.npmscriptrc` and strip comments.
+/* istanbul ignore next */
+try
+{
+   if (fs.statSync('./.npmscriptrc').isFile())
+   {
+      configInfo = JSON.parse(stripJsonComments(fs.readFileSync('./.npmscriptrc', 'utf-8')));
+   }
+}
+catch (err) { /* nop */ }
+
+// Exit now if no configInfo object has been loaded.
+if (typeof configInfo !== 'object')
+{
+   throw new Error("TyphonJS NPM script (test-coverage) could not load `./npmscriptrc.js` or `./npmscriptrc`.");
+}
 
 // Verify that mocha entry is an object.
-if (typeof configInfo.test !== 'object')
+if (typeof configInfo[testEntry] !== 'object')
 {
    throw new Error(
     "TyphonJS NPM script (test) error: 'test' entry is not an object or is missing in '.npmscriptrc'.");
 }
 
-var testConfig = configInfo.test;
+var testConfig = configInfo[testEntry];
 
 // Verify that mocha entry is an object.
 /* istanbul ignore if */

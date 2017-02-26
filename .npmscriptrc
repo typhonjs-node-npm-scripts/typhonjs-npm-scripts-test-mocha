@@ -15,10 +15,13 @@
 {
    "test":
    {
-      // Provides a report handling command that is executed after running tests / coverage when running on Travis CI.
-      "travis": { "report": "./node_modules/.bin/codecov" },
-
       "istanbul": { "command": "cover", "options": ["--report lcovonly"] },
       "mocha": { "source": "./test-src/src", "options": ["-t 120000 --recursive"] }
+   },
+
+   "test-dev":
+   {
+      "istanbul": { "command": "cover", "options": ["--report lcovonly"] },
+      "mocha": { "source": "./test-src/src-dev", "options": ["-t 120000 --recursive"] }
    }
 }
