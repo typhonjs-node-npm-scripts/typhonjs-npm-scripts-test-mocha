@@ -21,8 +21,6 @@ var testEntry = 'test';
 if (typeof process.argv[2] === 'string')
 {
    testEntry = process.argv[2];
-
-
 }
 
 // Verify that `Mocha` exists.
