@@ -1,3 +1,7 @@
+## 0.5.0 (2017-02-25)
+- Added support for `.npmscriptrc.js` and optional argument handling to pass in a string to target a different 
+  entry in `.npmscriptrc` for test running. 
+
 ## 0.4.0 (2017-02-18)
 - Added dependencies:
 - eslint-plugin-babel: ^4.0.0
