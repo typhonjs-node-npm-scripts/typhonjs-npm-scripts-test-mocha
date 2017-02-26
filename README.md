@@ -6,20 +6,19 @@
 [![Gitter](https://img.shields.io/gitter/room/typhonjs/TyphonJS.svg)](https://gitter.im/typhonjs/TyphonJS)
 
 [![Build Status](https://travis-ci.org/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha.svg?branch=master)](https://travis-ci.org/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha)
-[![Coverage](https://img.shields.io/codecov/c/github/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha.svg)](https://codecov.io/github/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha)
 [![Dependency Status](https://www.versioneye.com/user/projects/56e5a053df573d0043113afe/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56e5a053df573d0043113afe)
 
 Requirements: Node v5+ / NPM 3+
 
 Provides NPM scripts for testing with [Mocha](https://mochajs.org/) / [Chai](http://chaijs.com/), generating code coverage with [Istanbul](https://gotwarlost.github.io/istanbul/) and uploading results to [Codecov](https://codecov.io/) when running continuous integration on [Travis CI](https://travis-ci.org/) for all TyphonJS NPM modules and beyond. Linting support is also enabled via [ESLint](http://eslint.org/).
 
-This NPM module uses entries defined in the `test` entry located in `.npmscriptrc` in the root path of a project. This module works for both ES5 and ES6+ testing, but please note the usage instructions below for ES6 testing.
+This NPM module uses entries defined in the `test` entry located in `.npmscriptrc` or `.npmscriptrc.js` in the root path of a project. This module works for both ES5 and ES6+ testing, but please note the usage instructions below for ES6 testing.
 
 For the latest significant changes please see the [CHANGELOG](https://github.com/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha/blob/master/CHANGELOG.md).
 
 - IMPORTANT (breaking change): The [codecov.io](https://github.com/cainus/codecov.io) NPM module has been deprecated and also contains potential vulnerabilities and has been removed in favor of the official [codecov](https://www.npmjs.com/package/codecov) NPM module. You will need to modify `.npmscriptrc` and replace `"travis": { "report": "cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js" },` with `"travis": { "report": "./node_modules/.bin/codecov" },`. Apologies for the inconvencience. See CHANGELOG for more details.
 
-Also [snyk](https://www.npmjs.com/package/snyk) has been added which provides monitoring of known vulnerabilities in Node.js npm packages. One can add it to an NPM script on in [Travis CI](https://github.com/typhonjs-node-npm-scripts/typhonjs-npm-scripts-test-mocha/blob/master/.travis.yml#L6) add the following: `- snyk test --dev`. 
+- IMPORTANT (breaking change): In release `0.5.0` release `snyk` has been removed.
 
 For a comprehensive ES6 build / testing / publishing NPM module please see [typhonjs-npm-build-test](https://www.npmjs.com/package/typhonjs-npm-build-test) as it combines this module for testing  along with transpiling ES6 sources with Babel, pre-publish script detection, ESDoc dependencies and an Istanbul instrumentation hook for JSPM / SystemJS tests. For a full listing of all TyphonJS NPM script modules available please see [typhonjs-node-npm-scripts](https://github.com/typhonjs-node-npm-scripts) organization on GitHub.
 
@@ -41,7 +40,7 @@ To configure the test scripts provide this entry in `package.json` scripts entry
 
 ```
   "devDependencies": {
-    "typhonjs-npm-scripts-test-mocha": "^0.4.0"
+    "typhonjs-npm-scripts-test-mocha": "^0.5.0"
   },
   "scripts": {
     "test": "babel-node ./node_modules/typhonjs-npm-scripts-test-mocha/scripts/mocha.js",
