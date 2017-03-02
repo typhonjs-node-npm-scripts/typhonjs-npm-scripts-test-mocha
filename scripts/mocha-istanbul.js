@@ -27,6 +27,8 @@ var fs =                require('fs-extra');
 var path =              require('path');
 var stripJsonComments = require('strip-json-comments');
 
+var configName = '';
+var npmScript = getNPMScript();
 var testEntry = 'test';
 
 // Potentially set a new testEntry.
@@ -46,7 +48,7 @@ try
 }
 catch (err)
 {
-   throw new Error("TyphonJS NPM script (test-coverage) error: " + err);
+   throw new Error("TyphonJS NPM script (" + npmScript + ") error: " + err);
 }
 
 // Verify that `Mocha` exists.
@@ -60,7 +62,7 @@ try
 }
 catch (err)
 {
-   throw new Error("TyphonJS NPM script (test-coverage) error: " + err);
+   throw new Error("TyphonJS NPM script (" + npmScript + ") error: " + err);
 }
 
 var configInfo;
@@ -72,6 +74,7 @@ try
    if (fs.statSync('./.npmscriptrc.js').isFile())
    {
       configInfo = require(path.resolve('./.npmscriptrc.js'));
+      configName = '.npmscriptrc.js';
    }
 }
 catch (err)
@@ -83,6 +86,7 @@ catch (err)
       if (fs.statSync('./.npmscriptrc').isFile())
       {
          configInfo = JSON.parse(stripJsonComments(fs.readFileSync('./.npmscriptrc', 'utf-8')));
+         configName = '.npmscriptrc';
       }
    }
    catch (err) { /* nop */ }
@@ -91,7 +95,7 @@ catch (err)
 // Exit now if no configInfo object has been loaded.
 if (typeof configInfo !== 'object')
 {
-   throw new Error("TyphonJS NPM script (test-coverage) could not load `./npmscriptrc.js` or `./npmscriptrc`.");
+   throw new Error("TyphonJS NPM script (" + npmScript + ") could not load `./npmscriptrc.js` or `./npmscriptrc`.");
 }
 
 // Verify that mocha entry is an object.
@@ -99,7 +103,8 @@ if (typeof configInfo !== 'object')
 if (typeof configInfo[testEntry] !== 'object')
 {
    throw new Error(
-    "TyphonJS NPM script (test-coverage) error: 'test' entry is not an object or is missing in '.npmscriptrc'.");
+    "TyphonJS NPM script (" + npmScript + ") error: '" + testEntry
+     + "' entry is not an object or is missing in '" + configName + "'.");
 }
 
 var testConfig = configInfo[testEntry];
@@ -117,8 +122,8 @@ if (process.env.TRAVIS && typeof testConfig.travis === 'object')
 if (typeof testConfig.istanbul !== 'object')
 {
    throw new Error(
-    "TyphonJS NPM script (test-coverage) error: 'test.istanbul' entry is not an object or is missing in "
-     + "'.npmscriptrc'.");
+    "TyphonJS NPM script (" + npmScript + ") error: '" + testEntry
+     + ".istanbul' entry is not an object or is missing in '" + configName + "'.");
 }
 
 // Verify that Istanbul command entry is a string.
@@ -126,8 +131,8 @@ if (typeof testConfig.istanbul !== 'object')
 if (typeof testConfig.istanbul.command !== 'string')
 {
    throw new Error(
-    "TyphonJS NPM script (test-coverage) error: 'test.istanbul.command' entry is not a string or is missing in "
-     + "'.npmscriptrc'.");
+    "TyphonJS NPM script (" + npmScript + ") error: '" + testEntry
+     + ".istanbul.command' entry is not a string or is missing in '" + configName + "'.");
 }
 
 var istanbulOptions = testConfig.istanbul.command;
@@ -139,8 +144,8 @@ if (typeof testConfig.istanbul.options !== 'undefined')
    if (!Array.isArray(testConfig.istanbul.options))
    {
       throw new Error(
-       "TyphonJS NPM script (test-coverage) error: 'test.istanbul.options' entry is not an array in "
-        + "'.npmscriptrc'.");
+       "TyphonJS NPM script (" + npmScript + ") error: '" + testEntry
+        + ".istanbul.options' entry is not an array in '" + configName + "'.");
    }
 
    istanbulOptions += ' ' + testConfig.istanbul.options.join(' ');
@@ -151,8 +156,8 @@ if (typeof testConfig.istanbul.options !== 'undefined')
 if (typeof testConfig.mocha !== 'object')
 {
    throw new Error(
-    "TyphonJS NPM script (test-coverage) error: 'test.mocha' entry is not an object or is missing in "
-     + "'.npmscriptrc'.");
+    "TyphonJS NPM script (" + npmScript + ") error: '" + testEntry
+     + ".mocha' entry is not an object or is missing in '" + configName + "'.");
 }
 
 // Verify that source entry is a string.
@@ -160,8 +165,8 @@ if (typeof testConfig.mocha !== 'object')
 if (typeof testConfig.mocha.source !== 'string')
 {
    throw new Error(
-    "TyphonJS NPM script (test-coverage) error: 'test.mocha.source' entry is not a string or is missing in "
-     + "'.npmscriptrc'.");
+    "TyphonJS NPM script (" + npmScript + ") error: '" + testEntry
+     + ".mocha.source' entry is not a string or is missing in '" + configName + "'.");
 }
 
 // Create mocha options.
@@ -174,7 +179,8 @@ if (typeof testConfig.mocha.options !== 'undefined')
    if (!Array.isArray(testConfig.mocha.options))
    {
       throw new Error(
-       "TyphonJS NPM script (test-coverage) error: 'test.mocha.options' entry is not an array in '.npmscriptrc'.");
+       "TyphonJS NPM script (" + npmScript + ") error: '" + testEntry
+        + ".mocha.options' entry is not an array in '" + configName + "'.");
    }
 
    mochaOptions += ' ' + testConfig.mocha.options.join(' ');
@@ -205,4 +211,22 @@ if (reportCommand !== '')
    exec = reportCommand;
    process.stdout.write('Executing: ' + exec + '\n');
    cp.execSync(exec, { stdio: 'inherit' });
+}
+
+/**
+ * Gets the NPM script name.
+ * @returns {string}
+ */
+function getNPMScript()
+{
+   try
+   {
+      var npmArgv = JSON.parse(process.env['npm_config_argv']).cooked;
+      return npmArgv[1];
+   }
+   catch (err)
+   {
+      console.error("could not obtain 'npm_config_argv' environment variable.");
+      process.exit(1);
+   }
 }
